@@ -2,12 +2,17 @@ body {
 	font-family: "Montserrat", sans-serif;
 	font-size: 15px;
 	overflow-x: hidden;
-	--shade-1: #3B5BB3;
-	--shade-2: #897FFF;
-	--shade-1-light: #88A8FF;
-	--color: white;
-	background: black;
+	--shade-1: #EAAD9C;
+	--shade-2: rgb(201, 138, 120);
+	--shade-1-light: rgb(247, 201, 188);
+	--color: #DEE3D1;
+	--shade-3: #6ABE84;
+	--shade-3-light: rgb(135, 204, 157);
+	--background-color: #323339;
+	--background-color-light: #535357;
+	background: var(--background-color);
 	color: var(--color);
+	cursor: default;
 }
 #a {
 	position: fixed;
@@ -37,12 +42,12 @@ body {
 	position: fixed;
 	top: calc(10px + 0.7em);
 	padding: 7px;
-	left: calc(100% - 10% - 2.5% - 1em);
-	box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.5),
-		inset 10em 0 0 -10em var(--shade-1);
+	left: calc(90% - 2.5% - 6em);
+	box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.3),
+		inset 10em 0 0 -10em var(--shade-1-light);
 	border-radius: 20px;
 	font-family: "Montserrat", sans-serif;
-	width: 10%;
+	width: calc(10% + 5em);
 	height: 2.5em;
 	text-transform: uppercase;
 	letter-spacing: 2px;
@@ -54,7 +59,7 @@ body {
 }
 #submit:focus {
 	outline: none;
-	box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.5),
+	box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.3),
 		inset 10em 0 0 10em var(--shade-1-light);
 	transition: 0.5s;
 	color: var(--color);
@@ -66,13 +71,45 @@ body {
 }
 .children {
 	width: calc(100% - 1em);
-	padding: 8px;
-	font-size: 15px;
+	padding: 5px;
+	font-size: 12px;
 	letter-spacing: 1px;
 	border: 1px solid transparent;
+	background: var(--background-color);
 	transition: 0.15s;
+	z-index: 1;
 }
 .children:hover {
-	border: 1px solid blue;
+	/* border: 1px solid blue; */
+	background: var(--background-color-light);
+	padding: 7px;
+	margin-top: 2px;
+	margin-left: -10px;
+	box-shadow: 0 2px 0.3em -2px rgba(255, 255, 255, 0.3);
+	z-index: 2;
 	transition: 0.15s;
+}
+#bottom_navigator {
+	position: fixed;
+	width: 100%;
+	display: table;
+	--height: 4em;
+	height: var(--height);
+	top: 100vh;
+	margin-top: calc(-1 * var(--height));
+	left: 0;
+}
+#bottom_navigator > a {
+	float: right;
+	width: calc(100% / 3);
+	position: relative;
+	line-height: calc(var(--height) - 1em);
+	transition: 0.5s;
+	background: var(--shade-3);
+	text-align: center;
+	color: var(--color);
+}
+#bottom_navigator > a:hover {
+	transition: 0.5s;
+	background: var(--shade-3-light);
 }

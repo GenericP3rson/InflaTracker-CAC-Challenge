@@ -35,10 +35,16 @@ xhttp.onreadystatechange = (e) => {
 		*/
 		let val = ""
 		// If we've already rendered this before, we set this to the exact height; until, then, we just assume it's 25 px.
-		let newFiltered = list
+		let newFiltered = list,
+		showAmount = 100
 		const reaction = (e) => {
-			let start = performance.now()
+			let start = performance.now(),
 			val = document.getElementById("a").value
+			showAmount = 100
+			if(val == "") {
+				// Don't even try.
+				return
+			}
 			let fullList = []
 			for(let i = 0; i < val.length; i++) {
 				fullList.push(val[i].toLowerCase().charCodeAt(0) - 31)
@@ -73,7 +79,6 @@ xhttp.onreadystatechange = (e) => {
 			}
 		})
 		const refresh = (options) => {
-			showAmount = 100
 			document.getElementById("option").innerHTML = ""
 			for(let i = 0; i < options.length; i++) {
 				let newElement = document.createElement("div"),
@@ -87,18 +92,24 @@ xhttp.onreadystatechange = (e) => {
 		}
 
 		window.addEventListener("scroll", () => {
-			let store = window.scrollY
 			if(window.scrollY + window.innerHeight > document.body.scrollHeight) {
-				showAmount += 20
-				if(newFiltered) {
-					refresh(newFiltered.slice(0, showAmount))
-					window.scrollTo(0, store)
+				let store = window.scrollY
+				if(newFiltered.slice(0, showAmount) !== newFiltered.slice(0, showAmount + 20)) {
+					showAmount += 20
+					if(newFiltered) {
+						refresh(newFiltered.slice(0, showAmount))
+						window.scrollTo(0, store)
+					}
 				}
-				// else {
-				// 	refresh(list.slice(0, showAmount))
-				// }
 			}
 		})
+		let elements = document.getElementsByClassName("children")
+		for(let i = 0; i < elements.length; i++) {
+			elements[i].addEventListener("click", () => {
+				// Okay, now we tell the webpage to launch with info about this item, ingredients,
+				// And 
+			})
+		}
 		refresh(list.slice(0, showAmount))
     }
 }

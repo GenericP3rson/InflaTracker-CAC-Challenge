@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <link href="https://fonts.googleapis.com/css?family=Rajdhani&display=swap" rel="stylesheet">
+        <style>
+            #login {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                overflow: hidden;
+            }
+            #pic {
+                height: 100vh;
+                width: 100%;
+                filter: blur(4px);
+            }
+            #cover {
+                height: 100vh;
+                width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 2;
+                background: #6ABE84;
+                filter: opacity(0.7);
+            }
+            #profileStand {
+                position: fixed;
+                top: 25%;
+                width: 100%;
+                left: 0;
+                background: transparent;
+                text-align: center;
+                margin-top: -0.5em;
+                color: white;
+                z-index: 3;
+                font-size: 30px;
+                font-weight: bolder;
+                letter-spacing: 5px;
+                font-family: "Rajdhani", sans-serif;
+            }
+            #user, #pass, #submit {
+                position: fixed;
+                top: 25%;
+                width: 20em;
+                left: 50%;
+                margin-left: -10em;
+                z-index: 3;
+                margin-top: 3em;
+                padding: 2px;
+                background: none;
+                height: 3em;
+                border: none;
+                border-bottom: 3px solid blue;
+                transition: 0.5s;
+                color: white;
+                font-family: "Cascadia code", "Cascadia", "Monospace";
+                letter-spacing: 2px;
+            }
+            #user::placeholder {
+                color: rgba(255, 255, 255, 0.5);
+            }
+            #pass::placeholder {
+                color: rgba(255, 255, 255, 0.5);
+            }
+            #submit {
+                margin-top: 14em;
+                background: red;
+                border: none;
+                border-radius: 20px;
+            }
+            #pass:focus {
+                outline: none;
+                border-bottom: 3px solid green;
+                transition: 0.5s;
+            }
+            #user:focus {
+                outline: none;
+                border-bottom: 3px solid green;
+                transition: 0.5s;
+            }
+            #pass {
+                margin-top: 8em;
+            }
+            #submit:focus {
+                outline: none;
+            }
+            #err {
+                position: fixed;
+                top: 25%;
+                width: 100%;
+                margin-top: 20em;
+                border: none;
+                z-index: 3;
+                font-weight: bolder;
+                color: white;
+                font-family: "Cascadia Code", "Cascadia", sans-serif;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+    {% if accountInfo %}
+        Profile for {{ accountInfo.name }}:
+        <img src="{{ accountInfo.profileImg }}" alt="Please work...">
+    {% else %}
+        <!--Ok, we don't have an account set up yet.-->
+        <!--We're going to make a super quick login portal for now, nothing fancy.-->
+        <div id="login">
+            <img src="{{ logo }}" alt="Login Picture" id="pic">
+            <div id="cover"></div>
+            <div id="profileStand">InflaTracker</div>
+            <input type="text" placeholder="Username..." id="user">
+            <input type="password" placeholder="Password..." id="pass">
+            <button id="submit">Submit</button>
+            <div id="err"></div>
+        </div>
+        <script>
+            document.getElementById("submit").addEventListener("click", () => {
+                // Let's check up what our server says about this.
+                let xhttp = new XMLHttpRequest()
+                xhttp.onreadystatechange = () => {
+                    if(xhttp.readyState == 4 && xhttp.status == 200) {
+                        if(xhttp.responseText == 0) {
+                            // Okay, get angry.
+                            let elements = document.getElementsByTagName("input")
+                            for(let i = 0; i < elements.length; i++) {
+                                elements[i].style.borderBottom = "3px solid red"
+                                elements[i].value = ""
+                            }
+                            document.getElementById("err").innerHTML = "ERROR IN AUTHENTICATION. PLEASE TRY AGAIN."
+                        }
+                    }
+                }
+                xhttp.open("POST", "myInfo", true)
+                xhttp.setRequestHeader("content-type", "application/x-www-form-urlencoded")
+                xhttp.send(`accountName=${document.getElementById("user").value}&password=${document.getElementById("pass").value}`)
+            })
+        </script>
+    {% endif %}
+    </body>
+</html>

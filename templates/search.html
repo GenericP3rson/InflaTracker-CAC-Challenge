@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>InflaTracker</title>
+    <script src="https://kit.fontawesome.com/220a280fe8.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <!-- Okay, now this code gets complicated. -->
+    <!-- Automatically we run the home code(the profile): -->
+    <input type="text" id="a" placeholder="Enter food..." autocomplete="off" name="Enter Food">
+    <button id="submit">Search</button>
+    <div id="option"></div>
+    <div id="bottom_navigator">
+        <p id="swap"></p>
+        <a class="chi" href="profile.html" id="profile"><i class="fas fa-user"></i></a>
+        <a class="chi" href="stats.html" id="stats"><i class="fas fa-chart-line"></i></a>
+        <a class="chi" href="search.html" id="search"><i class="fas fa-search"></i></a>
+    </div>
+    <script src="{{ url_for('static', filename='search.js') }}"></script>
+</body>
+
+</html>
