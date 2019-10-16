@@ -4,7 +4,7 @@ The Super Cool Thingy
 
 import numpy as np
 import pandas as pd
-import makeAccount
+import makeAccount, hashing
 from flask import Flask, render_template, send_from_directory, jsonify, request
 app = Flask(__name__,
 static_url_path="/static")
@@ -26,25 +26,18 @@ class Crohns():
         self.food = data[0]
         self.ing = data[1]
         self.ingEaten = [] # Key: [[ingName, total # of inflams, total # of times eaten, % of inflams]]
-
+        self.accountInfo = {}
+        # Okay, automatically when we start the server the user isn't logged in.
         @app.route('/')
         def _home():
-            return render_template('search.html')
+            return render_template('profile.html', logo="static/brandIcon.png", accountInfo=self.accountInfo)
         @app.route('/<string:name>', methods=["GET"])
         def _get_javascript_data(name):
             if name == "process":
                 return ", ".join(data[0])
             if(render_template(name)):
-                # We need to send some account stats with us.
-                # For now... This'll be kinda insecure.
-                return render_template(name, logo="static/brandIcon.png")
-                '''
-                , accountInfo={
-                    "name": "Sarah",
-                    "work": "Please?",
-                    "profileImg": "https://cdn1.iconfinder.com/data/icons/avatar-1-2/512/User2-512.png"
-                }
-                '''
+                # Remember: ** We have a profile image, which was added in the accounts section. **
+                return render_template(name, logo="static/brandIcon.png", accountInfo=self.accountInfo)
             return render_template("404.html")
         @app.route("/<string:name>", methods=["POST"])
         def getData(name):
@@ -55,7 +48,15 @@ class Crohns():
             for i in range(len(accountData["USERNAMES"])):
                 if accountData["USERNAMES"][i] == username:
                     # Username in database, now check password.
-                    return F"{1 if accountData['PASSWORDS'][i] == attemptedPass else 0}"
+                    userPassed = 1 if accountData['PASSWORDS'][i] == hashing.hashTag(attemptedPass) else 0
+                    if userPassed:
+                        # The user logged in successfully, now set accountInfo to all our info.
+                        self.accountInfo = {
+                            "name": accountData["USERNAMES"][i],
+                            "info": accountData["INFO"][i],
+                            "names": accountData["NAMES"][i]
+                        }
+                    return str(userPassed)
             return "0"
         if __name__ == '__main__':
             app.run(debug=True)
