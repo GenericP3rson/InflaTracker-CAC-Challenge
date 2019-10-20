@@ -15,6 +15,7 @@ class CSV():
         self.words = list(self.words)
         # self.statsList = [eval(i) for i in self.stats]
         self.stats = list(self.stats)
+        self.profileImg = list(self.profileImg)
         print(self.stats)
         self.authenticated = False
         self.user = ""
@@ -31,6 +32,11 @@ class CSV():
             if hashing.hashTag(pas) == self.userToPass[user]:
                 self.authenticated = True
                 self.user = user
+                # We forgot to edit self.ind....
+                for i in range(len(self.users)):
+                    if self.users[i] == user:
+                        self.ind = i
+                self.theProfileImg = self.profileImg[self.ind]
                 self.ind = self.userToNum[self.user]
                 self.userUsername = self.users[self.ind]
                 self.userRealName = self.names[self.ind]
@@ -41,15 +47,17 @@ class CSV():
                 return False
         except:
             print("INVALID CREDENTIALS")
+            return False
     def rereadCSV(self, accounts = "Accounts"):
         '''
         It updates the arrays with the data.
         '''
-        self.users, self.names, self.words, self.stats = (pd.read_csv(f"{accounts}.csv").values.T)
+        self.users, self.names, self.words, self.stats, self.profileImg = (pd.read_csv(f"{accounts}.csv").values.T)
         self.users = list(self.users)
         self.names = list(self.names)
         self.words = list(self.words)
         self.stats = list(self.stats)
+        self.profileImg = list(self.profileImg)
         # self.statsList = [eval(i) for i in self.stats]
         self.userToNum = {user: num for num, user in enumerate(self.users)}
         self.userToPass = {user:pas for user, pas in zip(self.users, self.words)}
@@ -62,13 +70,17 @@ class CSV():
         '''
         if user in self.users:
             print("ERROR: PICK ANOTHER NAME")
-            return
+            return False
+        self.user = user
         self.users.append(user)
         self.names.append(name)
         self.words.append(hashing.hashTag(pas))
         self.stats.append(stat)
+        self.profileImg.append(F"https://picsum.photos/id/{len(self.user)}/200/300")
+        self.theProfileImg = F"https://picsum.photos/id/{len(self.user)}/200/300"
         self.updateCSV()
         self.rereadCSV()
+        return True
     def editStats(self, newStat):
         if self.authenticated:
             self.stats[self.ind] = newStat
@@ -103,4 +115,12 @@ class CSV():
         else: 
             return 0
     def updateCSV(self):
-        pd.DataFrame(np.array([self.users, self.names, self.words, self.stats]).T).to_csv(f"Accounts.csv", header=["USERNAMES", "NAMES", "PASSWORDS", "INFO"], index=False)
+        print(np.array([self.users, self.names, self.words, self.stats, self.profileImg]).T)
+        print(len(self.users), len(self.names), len(self.words), len(self.stats), len(self.profileImg))
+        pd.DataFrame({
+            "USERNAMES": self.users,
+            "NAMES": self.names,
+            "PASSWORDS": self.words,
+            "INFO": self.stats,
+            "PROFILE_IMG": self.profileImg
+        }).to_csv("Accounts.csv", index=False)
