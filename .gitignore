@@ -1,2 +1,4 @@
 *.csv
 !processedData.csv
+!Accounts.csv
+!Accounts2.csv

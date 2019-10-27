@@ -8,15 +8,17 @@
 }
 body {
     --color-log: #6ABE84;
-    --color: #6ABE84;
     font-family: "Montserrat", sans-serif;
-    --shade-1: #EAAD9C;
-    --shade-2: rgb(201, 138, 120);
-    --shade-1-light: rgb(247, 201, 188);
+	--shade-1: #BBDED6;
+	--shade-2: #61C0BF;
+    --shade-1-light: rgb(118, 204, 203);
     --color: #DEE3D1;
-    --shade-3: #6ABE84;
-    --shade-3-light: rgb(135, 204, 157);
-    --shade-4: #F26968;
+    --shade-3: #4BBCF4;
+    --shade-3-light: rgb(129, 214, 213);
+    --shade-5: #FFB6B9;
+    --shade-6: #FAE3D9;
+	--shade-4: #F26968;
+	cursor: default;
     --background-color: #323339;
     --background-color-light: #535357;
     background: var(--background-color);

@@ -1,18 +1,21 @@
 body {
-	font-family: "Montserrat", sans-serif;
-	font-size: 15px;
-	overflow-x: hidden;
-	--shade-1: #EAAD9C;
-	--shade-2: rgb(201, 138, 120);
-	--shade-1-light: rgb(247, 201, 188);
-	--color: #DEE3D1;
-	--shade-3: #6ABE84;
-	--shade-3-light: rgb(135, 204, 157);
-	--background-color: #323339;
-	--background-color-light: #535357;
-	background: var(--background-color);
-	color: var(--color);
+    --color-log: #6ABE84;
+    font-family: "Montserrat", sans-serif;
+	--shade-1: #8fc3b7;
+	--shade-2: #61C0BF;
+    --shade-1-light: rgb(118, 204, 203);
+    --color: #DEE3D1;
+    --shade-3: #4BBCF4;
+    --shade-3-light: rgb(129, 214, 213);
+    --shade-5: #FFB6B9;
+    --shade-6: rgb(218, 182, 166);
+	--shade-4: #F26968;
 	cursor: default;
+    --background-color: #323339;
+    --background-color-light: #535357;
+    background: var(--background-color);
+    font-family: "Montserrat", 'Lucida Sans', sans-serif;
+    overflow-x: hidden;
 }
 #a {
 	position: fixed;
@@ -62,7 +65,7 @@ body {
 #submit:focus {
 	outline: none;
 	box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.3),
-		inset 10em 0 0 10em var(--shade-1-light);
+		inset 10em 0 0 10em var(--shade-3);
 	transition: 0.5s;
 	color: var(--color);
 /* 	border: 2px solid var(--color); */
@@ -77,6 +80,7 @@ body {
 	font-size: 12px;
 	letter-spacing: 1px;
 	height: 2em;
+	color: white;
 	border: 1px solid transparent;
 	background: var(--background-color);
 	transition: 0.15s;
@@ -118,7 +122,7 @@ body {
 	height: 1.5em;
 	text-transform: uppercase;
 	letter-spacing: 2px;
-	background: linear-gradient(var(--shade-3-light), var(--shade-3));
+	background: linear-gradient(var(--shade-6), var(--shade-5));
 	color: white;
 	font-weight: bolder;
 	transition: 0.25s;
