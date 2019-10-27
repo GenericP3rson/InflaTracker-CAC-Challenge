@@ -93,13 +93,18 @@ xhttp.onreadystatechange = (e) => {
 				newElement.id = options[i]
 				newElement1.addEventListener("click", () => {
 					// TODO: GET request to ingredients.
-					let xhttp = new XMLHttpRequest()
+					let xhttp = new XMLHttpRequest(),
+					ans = prompt("Did this upset your stomach?").toLowerCase() == "yes" ? 1:0
 					xhttp.onreadystatechange = () => {
 						if(xhttp.readyState == 4 && xhttp.status == 200) {
+							newElement1.innerHTML = "ADDED!"
+							setTimeout(() => {
+								newElement1.innerHTML = "ADD"
+							}, 1500)
 							console.log(xhttp.responseText)
 						}
 					}
-					xhttp.open("GET", "ingredients/" + options[i])
+					xhttp.open("GET", "ingredients/" + options[i] + "/" + ans)
 					xhttp.send()
 				})
 				newElement.className = "children"

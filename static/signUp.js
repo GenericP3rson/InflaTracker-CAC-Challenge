@@ -1,6 +1,6 @@
 document.getElementById("submitI").addEventListener("click", () => {
     // Let's check up what our server says about this.
-    document.getElementById("login").style.opacity = 1
+    document.getElementById("loading").style.opacity = 1
     let xhttp = new XMLHttpRequest()
     xhttp.onreadystatechange = () => {
         if(xhttp.readyState == 4 && xhttp.status == 200) {
@@ -12,6 +12,7 @@ document.getElementById("submitI").addEventListener("click", () => {
                     elements[i].value = ""
                 }
                 document.getElementById("err").innerHTML = "ERROR IN AUTHENTICATION. PLEASE TRY AGAIN."
+                document.getElementById("loading").style.opacity = 0
             } else {
                 // Our code knows we're good now; let's help ourselves out by reloading the page with all our info.
                 window.location.reload(true)
@@ -23,7 +24,7 @@ document.getElementById("submitI").addEventListener("click", () => {
     xhttp.send(`accountName=${document.getElementById("user").value}&password=${document.getElementById("pass").value}`)
 })
 document.getElementById("signup").addEventListener("click", () => {
-    document.getElementById("login").style.opacity = 1
+    document.getElementById("loading").style.opacity = 1
     let xhttp = new XMLHttpRequest()
     xhttp.onreadystatechange = () => {
         if(xhttp.readyState == 4 && xhttp.status == 200) {
@@ -34,6 +35,7 @@ document.getElementById("signup").addEventListener("click", () => {
                     elements[i].value = ""
                 }
                 document.getElementById("err").innerHTML = "ERROR: Choose another username, please."
+                document.getElementById("loading").style.opacity = 0
             }
             else {
                 window.location.reload(true)

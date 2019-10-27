@@ -15,14 +15,12 @@ import hashing
 class CSV():
     def __init__(self, accounts = "Accounts", accounts2 = "Accounts2"):
         self.users, self.names, self.words, self.stats, self.restrictions, self.profileImgs = (pd.read_csv(f"{accounts}.csv").values.T)
-        _, self.foodData = (pd.read_csv(f"{accounts2}.csv").values.T)
         self.users = list(self.users)
         self.names = list(self.names)
         self.words = list(self.words)
         self.profileImgs = list(self.profileImgs)
         # self.statsList = [eval(i) for i in self.stats]
         self.stats = list(self.stats)
-        self.foodData = list(self.foodData) # [Food, Bool Inflam, Ingredients]
         self.restrictions = list(self.restrictions)
         # print(self.stats)
         self.authenticated = False
@@ -58,14 +56,12 @@ class CSV():
         It updates the arrays with the data.
         '''
         self.users, self.names, self.words, self.stats, self.restrictions, self.profileImgs = (pd.read_csv(f"{accounts}.csv").values.T)
-        _, self.foodData = (pd.read_csv(f"{accounts2}.csv").values.T)
         self.users = list(self.users)
         self.names = list(self.names)
         self.words = list(self.words)
         self.stats = list(self.stats)
         self.profileImgs = list(self.profileImgs)
         self.restrictions = list(self.restrictions)
-        self.foodData = list(self.foodData) # [Food, Bool Inflam, Ingredients]
         # self.statsList = [eval(i) for i in self.stats]
         self.userToNum = {user: num for num, user in enumerate(self.users)}
         self.userToPass = {user:pas for user, pas in zip(self.users, self.words)}
@@ -84,7 +80,6 @@ class CSV():
         self.words.append(hashing.hashTag(pas))
         self.stats.append(stat)
         self.restrictions.append(restriction)
-        self.foodData.append(foodData)
         self.profileImgs.append(F"https://picsum.photos/id/{len(self.users)}/200/300")
         self.theProfileImg = F"https://picsum.photos/id/{len(self.users)}/200/300"
         self.updateCSV()
@@ -99,8 +94,6 @@ class CSV():
             print("ERROR: NOT AUTHENTICATED")
     def editFoodData(self, fooddata):
         if self.authenticated:
-            print(self.foodData, len(self.foodData))
-            self.foodData[self.ind] = fooddata
             self.updateCSV()
             self.rereadCSV()
         else:
@@ -128,14 +121,9 @@ class CSV():
             print("ERROR: NOT AUTHENTICATED")
     def getStats(self):
         if self.authenticated:
+            print(self.stats[self.ind])
             return self.stats[self.ind]
         else: 
-            print("ERROR: NOT AUTHENTICATED")
-            return 0
-    def getFoodData(self):
-        if self.authenticated:
-            return self.foodData[self.ind]
-        else:
             print("ERROR: NOT AUTHENTICATED")
             return 0
     def addRestriction(self, res):
@@ -156,8 +144,6 @@ class CSV():
     def updateCSV(self):
         pd.DataFrame(np.array([self.users, self.names, self.words, self.stats, self.restrictions, self.profileImgs]).T).to_csv(
             f"Accounts.csv", header=["USERNAMES", "NAMES", "PASSWORDS", "INFO", "RESTRICTIONS", "PROFILE_IMGS"], index=False)
-        pd.DataFrame(np.array([self.users, self.foodData]).T).to_csv(
-            f"Accounts2.csv", header=["USERNAMES", "RESTRICTIONS"], index=False)
 
 # i = CSV()
 # # i.addClient("SHREYA", "Shreya", "name", "[]")

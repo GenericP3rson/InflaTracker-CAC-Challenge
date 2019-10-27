@@ -59,7 +59,6 @@ class Crohns(makeAccount.CSV):
             return
         algorithm = KM(n_clusters=2)
         categories = algorithm.fit_predict(self.allCoord)
-        print(self.stuff, categories)
         plt.scatter(self.allCoord[categories == 0, 0], self.allCoord[categories == 0, 1], c= "green")
         plt.scatter(self.allCoord[categories == 1, 0],self.allCoord[categories == 1, 1], c="red")
         plt.scatter(algorithm.cluster_centers_[:, 0], algorithm.cluster_centers_[:, 1], c= "black", marker="*")
@@ -88,7 +87,6 @@ class Crohns(makeAccount.CSV):
         self.foodToIng = {food: ing for food, ing in zip(self.food, self.ing)} # Food to ingredient 
         self.foodToNum = {food: num for num, food in enumerate(self.foodSet)} # Food to index in food list  
         # print(self.foodToIng["BAGELS"])
-        print(len(self.foodToIng), len(self.foodToNum), len(self.foodSet))
 
     def enterFood(self, food, inflammed):
         '''
@@ -96,6 +94,7 @@ class Crohns(makeAccount.CSV):
         '''
         results = self.findFood(food) # Whether the food is in the database; if yes, returns array
         if results:
+            print(results, type(results))
             for i in results:
                 inIt = False
                 for j in self.ingEaten: # If the person has already eaten the ingredient
@@ -107,12 +106,14 @@ class Crohns(makeAccount.CSV):
                         break
                 if not inIt: # If they haven't eaten the food yet.
                     self.ingEaten.append([i, int(inflammed), 1, float(inflammed)])
-
+            return self.filter()
+        return 0
     def findFood(self, food):
         '''
         This function checks if the food exists within the dataset. If it does, it will return the ingredients of the food.
         '''
-        if (not food in self.foodSet): 
+        self.openData()
+        if (not food in self.foodToIng): 
             print(f"ERROR: {food} not found") # Will print an error
             return False
         else: 
@@ -175,10 +176,10 @@ class Crohns(makeAccount.CSV):
                     "user": self.user
                 }, src=self.src)
             return render_template("404.html")
-        @app.route("/ingredients/<string:name>", methods=["GET"])
-        def _get_ingredients(name):
-            print(self.foodData, self.ingEaten)
-            return
+        @app.route("/ingredients/<string:name>/<string:name1>", methods=["GET"])
+        def _get_ingredients(name, name1):
+            print(self.enterFood(name, name1 == "1"), type(self.enterFood(name, name1 == "1")))
+            return "1"
         @app.route("/signUp", methods=["POST"])
         def _():
             username = request.form.get("accountName")
@@ -197,7 +198,7 @@ class Crohns(makeAccount.CSV):
                 self.loginAndEnter(username, attemptedPass)
             return ans
         if __name__ == '__main__':
-            app.run(debug=False)
+            app.run(debug=True)
 
 i = Crohns()
 # i.addClient("USERname", "Shreya C", "password", "[]")
