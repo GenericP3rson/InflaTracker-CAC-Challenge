@@ -101,6 +101,11 @@ body {
 	transition: 0.25s;
 	letter-spacing: 5px;
 }
+.addButton:focus {
+	background: white;
+	color: var(--shade-3);
+	transition: 0.25s;
+}
 .addButton {
 	position: relative;
 	top: -1.7em;

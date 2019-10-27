@@ -88,16 +88,19 @@ xhttp.onreadystatechange = (e) => {
 				if(JSON.stringify(options[i].split("").slice(0, 40)) != JSON.stringify(options[i].split(""))) {
 					node = document.createTextNode(options[i].split("").slice(0, 40).join("") + "...")
 				}
-				newElement1.name = options[i]
+				newElement1.name = i
 				newElement1.className = "addButton"
 				newElement.id = options[i]
 				newElement1.addEventListener("click", () => {
 					// TODO: GET request to ingredients.
 					let xhttp = new XMLHttpRequest()
 					xhttp.onreadystatechange = () => {
-						
+						if(xhttp.readyState == 4 && xhttp.status == 200) {
+							console.log(xhttp.responseText)
+						}
 					}
-					xhttp.open("GET", "")
+					xhttp.open("GET", "ingredients/" + i)
+					xhttp.send()
 				})
 				newElement.className = "children"
 				newElement.appendChild(node)
