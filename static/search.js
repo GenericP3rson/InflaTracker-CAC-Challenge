@@ -99,7 +99,7 @@ xhttp.onreadystatechange = (e) => {
 							console.log(xhttp.responseText)
 						}
 					}
-					xhttp.open("GET", "ingredients/" + i)
+					xhttp.open("GET", "ingredients/" + options[i])
 					xhttp.send()
 				})
 				newElement.className = "children"

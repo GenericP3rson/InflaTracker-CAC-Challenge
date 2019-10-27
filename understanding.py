@@ -177,7 +177,7 @@ class Crohns(makeAccount.CSV):
             return render_template("404.html")
         @app.route("/ingredients/<string:name>", methods=["GET"])
         def _get_ingredients(name):
-            print(self.foodData, self.order, self.ingEaten)
+            print(self.foodData, self.ingEaten)
             return
         @app.route("/signUp", methods=["POST"])
         def _():
