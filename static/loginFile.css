@@ -8,6 +8,8 @@
 }
 body {
     --color-log: #6ABE84;
+    --color: #6ABE84;
+    font-family: "Montserrat", sans-serif;
     --shade-1: #EAAD9C;
     --shade-2: rgb(201, 138, 120);
     --shade-1-light: rgb(247, 201, 188);
@@ -17,11 +19,16 @@ body {
     --shade-4: #F26968;
     --background-color: #323339;
     --background-color-light: #535357;
+    background: var(--background-color);
     font-family: "Montserrat", 'Lucida Sans', sans-serif;
+    overflow-x: hidden;
 }
 #pic {
+    position: relative;
     height: 100vh;
-    width: 100%;
+    width: 120vh;
+    left: 50vw;
+    margin-left: -60vh;
     filter: blur(4px);
 }
 #cover {
@@ -137,7 +144,7 @@ body {
 }
 #bottom_navigator > a:hover {
     transition: 0.5s;
-    background: var(--shade-3-light);
+    box-shadow: inset 0 0 1em 2px rgba(0, 0, 0, 0.3);
 }
 #card {
     position: fixed;
@@ -146,7 +153,7 @@ body {
     width: 100%;
     height: calc(75px + 5em);
     z-index: 2;
-    background: linear-gradient(to top right, #5976CF, #662672);
+    background: linear-gradient(to top right, var(--shade-4), var(--shade-1));
     box-shadow: 0 -0.75em 0.75em 1em rgba(0, 0, 0, 0.3);
 }
 #profilePic {
@@ -172,7 +179,30 @@ body {
     position: fixed;
     top: calc(75px + 5em);
     z-index: -1;
-    height: calc(100% - (75px + 5em));
-    width: 100%;
-    left: 0;
+    height: calc(100vh - (75px + 5em) - 3em);
+    width: calc(100vh - (75px + 5em));
+    left: 50%;
+    margin-left: calc((100vh - (75px + 5em))/-2);
+}
+#loading {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    top: 10px;
+    left: 50%;
+    margin-left: -50px;
+    border: 10px solid transparent;
+    border-top: 10px solid #F26968;
+    animation-name: a;
+    z-index: 3;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    border-radius: 100%;
+    opacity: 0;
+}
+@keyframes a {
+    0% {
+        transform: rotateZ(360deg);
+    }
 }

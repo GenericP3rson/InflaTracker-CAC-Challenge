@@ -1,5 +1,6 @@
 document.getElementById("submitI").addEventListener("click", () => {
     // Let's check up what our server says about this.
+    document.getElementById("login").style.opacity = 1
     let xhttp = new XMLHttpRequest()
     xhttp.onreadystatechange = () => {
         if(xhttp.readyState == 4 && xhttp.status == 200) {
@@ -22,6 +23,7 @@ document.getElementById("submitI").addEventListener("click", () => {
     xhttp.send(`accountName=${document.getElementById("user").value}&password=${document.getElementById("pass").value}`)
 })
 document.getElementById("signup").addEventListener("click", () => {
+    document.getElementById("login").style.opacity = 1
     let xhttp = new XMLHttpRequest()
     xhttp.onreadystatechange = () => {
         if(xhttp.readyState == 4 && xhttp.status == 200) {

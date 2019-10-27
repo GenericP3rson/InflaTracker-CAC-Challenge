@@ -82,10 +82,27 @@ xhttp.onreadystatechange = (e) => {
 			document.getElementById("option").innerHTML = ""
 			for(let i = 0; i < options.length; i++) {
 				let newElement = document.createElement("div"),
-						node = document.createTextNode(options[i])
+						node = document.createTextNode(options[i]),
+						newElement1 = document.createElement("div"),
+						node1 = document.createTextNode("ADD")
+				if(JSON.stringify(options[i].split("").slice(0, 40)) != JSON.stringify(options[i].split(""))) {
+					node = document.createTextNode(options[i].split("").slice(0, 40).join("") + "...")
+				}
+				newElement1.name = options[i]
+				newElement1.className = "addButton"
 				newElement.id = options[i]
+				newElement1.addEventListener("click", () => {
+					// TODO: GET request to ingredients.
+					let xhttp = new XMLHttpRequest()
+					xhttp.onreadystatechange = () => {
+						
+					}
+					xhttp.open("GET", "")
+				})
 				newElement.className = "children"
 				newElement.appendChild(node)
+				newElement1.appendChild(node1)
+				newElement.appendChild(newElement1)
 				document.getElementById("option").appendChild(newElement)
 				defaultHeight = newElement.getBoundingClientRect().height
 			}

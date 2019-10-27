@@ -6,197 +6,26 @@
         <link href="https://fonts.googleapis.com/css?family=Rajdhani&display=swap" rel="stylesheet">
         <script src="https://kit.fontawesome.com/220a280fe8.js" crossorigin="anonymous"></script>
         <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+        <link href="{{ url_for('static', filename='loginFile.css') }}" rel="stylesheet">
         <style>
-            #login {
+            #stats {
+                background: rgb(135, 204, 157) !important;
+            }
+            #chooseButtons {
+                background: #DFE2D2;
+                color: #323339;
                 position: fixed;
-                top: 0;
                 left: 0;
-                width: 100%;
-                height: 100vh;
-                overflow: hidden;
-            }
-            body {
-                --color: #6ABE84;
-                font-family: "Montserrat", sans-serif;
-                --shade-1: #EAAD9C;
-                --shade-2: rgb(201, 138, 120);
-                --shade-1-light: rgb(247, 201, 188);
-                --color: #DEE3D1;
-                --shade-3: #6ABE84;
-                --shade-3-light: rgb(135, 204, 157);
-                --background-color: #323339;
-                --background-color-light: #535357;
-                background: var(--background-color);
-            }
-            #pic {
-                height: 100vh;
-                width: 100%;
-                filter: blur(4px);
-            }
-            #cover {
-                height: 100vh;
-                width: 100%;
-                position: fixed;
-                top: 0;
-                left: 0;
-                z-index: 2;
-                background: var(--color);
-                filter: opacity(0.7);
-            }
-            #profileStand {
-                position: fixed;
-                top: 25%;
-                width: 100%;
-                left: 0;
-                background: transparent;
-                text-align: center;
-                margin-top: -0.5em;
-                color: white;
-                z-index: 3;
-                font-size: 30px;
-                font-weight: bolder;
-                letter-spacing: 5px;
-                font-family: "Rajdhani", sans-serif;
-            }
-            #user, #pass, #submit, #signup {
-                position: fixed;
-                top: 25%;
-                width: 20em;
-                left: 50%;
-                margin-left: -10em;
-                z-index: 3;
-                margin-top: 3em;
-                padding: 2px;
-                background: none;
-                height: 3em;
-                border: none;
-                border-bottom: 3px solid var(--shade-2);
-                transition: 0.5s;
-                color: white;
-                font-family: "Cascadia code", "Cascadia", "Monospace";
-                letter-spacing: 2px;
-            }
-            #user::placeholder {
-                color: rgba(255, 255, 255, 0.5);
-            }
-            #pass::placeholder {
-                color: rgba(255, 255, 255, 0.5);
-            }
-            #submit, #signup {
-                margin-top: 14em;
-                background: transparent;
-                border: none;
-                border-radius: 20px;
-                color: white;
-                border: 2px solid white;
-            }
-            #signup {
-                color: var(--color);
-                background: white;
-                margin-top: 20em;
-                box-shadow: 0 0.25em 1em -0.5em rgba(0, 0, 0, 0.3);
-            }
-            #pass:focus {
-                outline: none;
-                border-bottom: 3px solid var(--shade-3);
-                transition: 0.5s;
-            }
-            #user:focus {
-                outline: none;
-                border-bottom: 3px solid var(--shade-3);
-                transition: 0.5s;
-            }
-            #pass {
-                margin-top: 8em;
-            }
-            #submit:focus {
-                outline: none;
-            }
-            #err {
-                position: fixed;
-                top: 25%;
-                width: 100%;
-                margin-top: 20em;
-                border: none;
-                z-index: 3;
-                font-weight: bolder;
-                color: white;
-                font-family: "Cascadia Code", "Cascadia", sans-serif;
-                text-align: center;
-            }
-            #bottom_navigator {
-                position: fixed;
-                width: 100%;
-                display: table;
-                --height: 4em;
-                height: var(--height);
-                top: 100vh;
-                margin-top: calc(-1 * var(--height));
-                left: 0;
-            }
-            #bottom_navigator > a {
-                float: right;
-                width: calc(100% / 3);
-                position: relative;
-                line-height: calc(var(--height) - 1em);
-                transition: 0.5s;
-                background: var(--shade-3);
-                text-align: center;
-                color: var(--color);
-            }
-            #bottom_navigator > a:hover {
-                transition: 0.5s;
-                background: var(--shade-3-light);
-            }
-            #cover {
-                height: 100vh;
-                width: 100%;
-                position: fixed;
-                top: 0;
-                left: 0;
-                z-index: 2;
-                background: var(--shade-3);
-                filter: opacity(0.7);
-            }
-            #card {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: calc(75px + 5em);
-                z-index: 2;
-                background: linear-gradient(to top right, #5976CF, #662672);
-                box-shadow: 0 -0.75em 0.75em 1em rgba(0, 0, 0, 0.3);
-            }
-            #profilePic {
-                position: relative;
-                width: 75px;
-                height: 75px;
-                background: white;
-                border-radius: 100%;
-                display: block;
-                margin: auto;
-                margin-top: 1em;
-            }
-            #name {
-                text-align: center;
-                width: 100%;
-                color: var(--color);
-                letter-spacing: 2px;
-                margin-top: 1em;
-            }
-            #graph {
-                background: var(--background-color);
-                position: fixed;
-                top: calc(75px + 5em);
-                z-index: -1;
-                height: calc(100% - (75px + 5em));
-                width: 100%;
-                left: 0;
+                top: calc(75px + 8em);
+                width: calc((100vh - (75px + 5em))/3.9);
+                opacity: 0.8;
+                font-size: 10px;
+                font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             }
         </style>
     </head>
     <body>
+    {% if accountInfo %}
     {% if accountInfo.user != "" %}
         <div id="card">
             {% if accountInfo.theProfileImg %}
@@ -206,8 +35,12 @@
             {% endif %}
             <div id="name">{{accountInfo.user}}</div>
         </div>
-        <canvas id="graph">Your brower doesn't support the canvas element, sorry!</canvas>
         <!--TODO: Get graph set up...-->
+        <img alt="Graph of Inflammation" src="{{ url_for('static', filename=src) }}" id="graph">
+        <div id="chooseButtons">
+            <input name="chooseGraph" type="radio" value="predict" checked>Show Prediction Graphs<br>
+            <input name="chooseGraph" type="radio" value="foodReco">Show Food Recommendations
+        </div>
         <div id="bottom_navigator">
             <p id="swap"></p>
             <a class="chi" href="profile.html" id="profile"><i class="fas fa-user"></i></a>
@@ -217,6 +50,7 @@
     {% else %}
         <!--Ok, we don't have an account set up yet.-->
         <!--We're going to make a super quick login portal for now, nothing fancy.-->
+        <div id="loading"></div>
         <div id="login">
             <img src="{{ logo }}" alt="Login Picture" id="pic">
             <div id="cover"></div>
@@ -228,6 +62,7 @@
             <div id="err"></div>
         </div>
         <script src="{{ url_for('static', filename='signUp.js') }}"></script>
+    {% endif %}
     {% endif %}
     </body>
 </html>

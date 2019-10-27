@@ -16,13 +16,11 @@ class CSV():
         # self.statsList = [eval(i) for i in self.stats]
         self.stats = list(self.stats)
         self.profileImg = list(self.profileImg)
-        print(self.stats)
         self.authenticated = False
         self.user = ""
         # self.numToInfo = [[] num, data for enumerate(zip(self.users, self.names, self.stats)]
         self.userToNum = {user:num for num, user in enumerate(self.users)}
         self.userToPass = {user:pas for user, pas in zip(self.users, self.words)}
-        print(self.userToNum)
         self.ind = 0
     def login(self, user, pas):
         '''
@@ -61,7 +59,6 @@ class CSV():
         # self.statsList = [eval(i) for i in self.stats]
         self.userToNum = {user: num for num, user in enumerate(self.users)}
         self.userToPass = {user:pas for user, pas in zip(self.users, self.words)}
-        print(self.userToNum)
 
     def addClient(self, user, pas, name="",  stat="[]"):
         '''
@@ -115,8 +112,6 @@ class CSV():
         else: 
             return 0
     def updateCSV(self):
-        print(np.array([self.users, self.names, self.words, self.stats, self.profileImg]).T)
-        print(len(self.users), len(self.names), len(self.words), len(self.stats), len(self.profileImg))
         pd.DataFrame({
             "USERNAMES": self.users,
             "NAMES": self.names,
