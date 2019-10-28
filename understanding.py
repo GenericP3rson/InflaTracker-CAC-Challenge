@@ -28,8 +28,8 @@ user = makeAccount.CSV()
 class Crohns(makeAccount.CSV):
     def loginAndEnter(self, user, word):
         self.login(user, word)
-        print(self.getStats())
         self.stuff = eval(self.getStats())
+        self.change = False
         # print([[x, y-x] for _, x, y, _ in stuff[0]])
         self.allCoord = np.array([np.array([x, y-x]) for j in self.stuff for _, x, y, _ in j])
     def printPoints(self):
@@ -62,6 +62,7 @@ class Crohns(makeAccount.CSV):
         plt.scatter(self.allCoord[categories == 0, 0], self.allCoord[categories == 0, 1], c= "green")
         plt.scatter(self.allCoord[categories == 1, 0],self.allCoord[categories == 1, 1], c="red")
         plt.scatter(algorithm.cluster_centers_[:, 0], algorithm.cluster_centers_[:, 1], c= "black", marker="*")
+        print(len(self.labels), len(self.allCoord))
         for i, txt in enumerate(self.labels):
             plt.annotate(txt, (self.allCoord[i][0], self.allCoord[i][1]))
         plt.annotate("NO INFLAMMATION", algorithm.cluster_centers_[0])
@@ -92,9 +93,8 @@ class Crohns(makeAccount.CSV):
         '''
         This will enter the data into the list of foods eaten.
         '''
-        results = self.findFood(food) # Whether the food is in the database; if yes, returns array
+        results = eval(self.findFood(food)) # Whether the food is in the database; if yes, returns array
         if results:
-            print(results, type(results))
             for i in results:
                 inIt = False
                 for j in self.ingEaten: # If the person has already eaten the ingredient
@@ -164,6 +164,15 @@ class Crohns(makeAccount.CSV):
             return render_template('profile.html', logo="static/brandIcon.png", accountInfo={
                     "user": self.user
                 })
+        @app.route("/edit/<string:name>/<string:name1>")
+        def _open(name, name1):
+            if name == "userchange":
+                self.editUsername(name1)
+            elif name == "namechange":
+                self.editName(name1)
+            elif name == "passwordchange":
+                self.changePassword(self.words[self.ind], hashing.hashTag(name1))
+            return "1"
         @app.route('/<string:name>', methods=["GET"])
         def _get_javascript_data(name):
             if name == "process":
@@ -178,7 +187,8 @@ class Crohns(makeAccount.CSV):
             return render_template("404.html")
         @app.route("/ingredients/<string:name>/<string:name1>", methods=["GET"])
         def _get_ingredients(name, name1):
-            print(self.enterFood(name, name1 == "1"), type(self.enterFood(name, name1 == "1")))
+            self.enterFood(name, name1 == "1")
+            self.stuff = eval(self.getStats())
             return "1"
         @app.route("/signUp", methods=["POST"])
         def _():

@@ -121,7 +121,8 @@ class CSV():
             print("ERROR: NOT AUTHENTICATED")
     def getStats(self):
         if self.authenticated:
-            print(self.stats[self.ind])
+            self.updateCSV()
+            self.rereadCSV()
             return self.stats[self.ind]
         else: 
             print("ERROR: NOT AUTHENTICATED")

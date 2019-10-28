@@ -9,7 +9,17 @@
         <link href="{{ url_for('static', filename='loginFile.css') }}" rel="stylesheet">
         <style>
             #profile {
-                background: rgb(135, 204, 157) !important;
+                background: rgb(118, 206, 250) !important;
+            }
+            #listOfStuffToChange {
+                margin-top: calc(75px + 7em);
+            }
+            #listOfStuffToChange > div {
+                border: 2px solid white;
+                color: white;
+                padding: 2px;
+                margin-top: -2px;
+                letter-spacing: 2px;
             }
         </style>
     </head>
@@ -24,6 +34,12 @@
                 {% endif %}
                 <div id="name">{{accountInfo.user}}</div>
             </div>
+            <div id="listOfStuffToChange">
+                <div id="userchange" class="aag">Edit Username</div>
+                <div id="namechange" class="aag">Edit Name</div>
+                <div id="passwordchange" class="aag">Edit Password</div>
+                <div id="signout" class="aa">Sign Out</div>
+            </div>
             <!--Okay, here we fill in some info about our user.
             Some things we should contain:
             - Things they recently ate
@@ -35,6 +51,23 @@
                 <a class="chi" href="stats.html" id="stats"><i class="fas fa-chart-line"></i></a>
                 <a class="chi" href="search.html" id="search"><i class="fas fa-search"></i></a>
             </div>
+            <script>
+                let elements = document.getElementsByClassName("aag")
+                for(let i = 0; i < elements.length; i++) {
+                    console.log(elements[i])
+                    elements[i].addEventListener("click", () => {
+                        let enterNew = prompt(elements[i].innerHTML)
+                        let xhttp = new XMLHttpRequest()
+                        xhttp.onreadystatechange = () => {
+                            if(xhttp.readyState == 4 && xhttp.status == 200) {
+                                window.location.reload(true)
+                            }
+                        }
+                        xhttp.open("GET", `/edit/${elements[i].id}/${enterNew}`)
+                        xhttp.send()
+                    })
+                }
+            </script>
         {% else %}
             <!--Ok, we don't have an account set up yet.-->
             <!--We're going to make a super quick login portal for now, nothing fancy.-->

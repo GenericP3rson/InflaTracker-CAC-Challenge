@@ -6,8 +6,8 @@ import numpy as np
 def parsify(parent="Food.csv"):
     thing = pd.read_csv(parent).values
     INGREDIENT_LIMIT = 200
-    food = thing[:, 0]
-    ing = thing[:, 1]
+    food = thing[:, 1]
+    ing = thing[:, -1]
     findFood = ["BARBECUE SAUCE", "MUSTARD", "PIZZA CRUST",
                 "SORBET", "HUMMUS", "GELATO", "SPAGHETTI", "MACARONI", "PASTA SAUCE", 
                 "TOMATO SAUCE", "CHEDDAR CHEESE", "CORN TORTILLA CHIPS", "SOUR PATCH", 
@@ -43,7 +43,7 @@ def parsify(parent="Food.csv"):
                  "Minute Maid", "SQUEEZE & GO", "PREMIUM SPANISH", "STELLA", "NATHAN", "BRYAN", "DRAGONE", "MRS. SMITH'S",
                  "SUPERFOOD", "ROLAND", "FORD FARM", "JEFF'S NATURALS", "FULL CIRCLE", "SANTA BARBARA OLIVE CO.", "WYLWOOD", "MY ESSENTIALS",
                  "CLOVER VALLEY", "WILD THINGS", "COLONNA", "SUN OF ITALY", "SHOPRITE", "VOLPI", "GIORGIO", "FRESH FINDS", "DUNCAN HINES", "MILK MAGIC",
-                 "SHOPRITE", "MARIE CALLENDERS", "BANQUET", "KID CUISINE", "ORVILLE", "SWISS MISS", "ROSARITA"]
+                 "SHOPRITE", "MARIE CALLENDERS", "BANQUET", "KID CUISINE", "ORVILLE", "SWISS MISS", "ROSARITA", ","]
     concatFoods = [[] for i in findFood]
     togo = []
     print(ing.shape)
@@ -115,7 +115,8 @@ def parsify(parent="Food.csv"):
                 food[ii] = None
                 canPlay = False
         for i in companies:
-            if food[ii] and food[ii].find(i) != -1:
+            # if :
+            if type(food[ii]) == str and food[ii].find(i) != -1:
                 print(food[ii])
                 food[ii] = None
                 ing[ii] = None
@@ -126,7 +127,7 @@ def parsify(parent="Food.csv"):
 
     for i in range(len(food)):
         for j in range(len(findFood)):
-            if food[i] and food[i].find(findFood[j]) != -1:
+            if type(food[ii]) == str and food[i].find(findFood[j]) != -1:
                 print(food[i])
                 if (type(ing[i]) != float and len(concatFoods[j]) < INGREDIENT_LIMIT):
                     concatFoods[j]+=ing[i]
@@ -161,7 +162,7 @@ def parsify(parent="Food.csv"):
     # y2 = concatFoods
     y = np.concatenate((y1, y2))
     # print(y[-2:])
-    print(concatFoods[0][:10])
+    # print(concatFoods[0][:10])
     return [x, y]
 
 # parsify()

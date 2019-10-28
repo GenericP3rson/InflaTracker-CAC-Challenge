@@ -155,7 +155,7 @@ body {
     width: 100%;
     height: calc(75px + 5em);
     z-index: 2;
-    background: linear-gradient(to top right, var(--shade-4), var(--shade-1));
+    background: linear-gradient(to top right, var(--shade-2), var(--shade-3));
     box-shadow: 0 -0.75em 0.75em 1em rgba(0, 0, 0, 0.3);
 }
 #profilePic {
