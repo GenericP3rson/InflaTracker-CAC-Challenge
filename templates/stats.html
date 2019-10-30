@@ -22,6 +22,17 @@
                 font-size: 10px;
                 font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             }
+            #rec {
+                position: fixed;
+                background: red;
+                z-index: -1;
+                width: 10px;
+                height: 100px;
+                top: calc(75px + 5em + 100vh - (75px + 5em) - 3em);
+            }
+            .rec {
+                color: black;
+            }
         </style>
     </head>
     <body>
@@ -37,8 +48,14 @@
         </div>
         <!--TODO: Get graph set up...-->
         <img alt="Graph of Inflammation" src="{{ url_for('static', filename=src) }}" id="graph">
+        <div id ="rec">
+            <div id = "goodfood" class = "rec"></div>
+            <div id = "badfood" class = "rec"></div>
+            <div id = "gooding" class = "rec"></div>
+            <div id = "bading" class = "rec"></div>
+        </div>
         <div id="chooseButtons">
-            <input name="chooseGraph" type="radio" value="predict" checked>Show Prediction Graphs<br>
+            <input name="chooseGraph" type="radio" value="predict" id = "back" checked>Show Prediction Graphs<br>
             <input name="chooseGraph" type="radio" value="foodReco">Show Food Recommendations
         </div>
         <div id="bottom_navigator">
@@ -47,6 +64,7 @@
             <a class="chi" href="stats.html" id="stats"><i class="fas fa-chart-line"></i></a>
             <a class="chi" href="search.html" id="search"><i class="fas fa-search"></i></a>
         </div>
+        <script src = " {{ url_for('static', filename='recs.js') }}"></script>
     {% else %}
         <!--Ok, we don't have an account set up yet.-->
         <!--We're going to make a super quick login portal for now, nothing fancy.-->

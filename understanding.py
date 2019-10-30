@@ -128,20 +128,83 @@ class Crohns(makeAccount.CSV):
         This will group food together based on the % of inflammations.
         '''
         self.mostLikely() # First sorts the list
-        num = self.ingEaten[0][3] # Sets it to the most common
-        count = 0
-        self.order = [[self.ingEaten[0]]] # Holds the food based on index
-        i = 1
-        while i < len(self.ingEaten):
-            if (self.ingEaten[i][3] == num):
-                self.order[count].append(self.ingEaten[i]) # Adds it if they have the same frequency
-            else:
-                num = self.ingEaten[i][3]
-                count+=1
-                self.order.append([self.ingEaten[i]]) # Else creates a new frequency list
-            i+=1
-        self.editStats(str(self.order))
+        if (len(self.ingEaten) > 0):
+            num = self.ingEaten[0][3] # Sets it to the most common
+            count = 0
+            self.order = [[self.ingEaten[0]]] # Holds the food based on index
+            i = 1
+            while i < len(self.ingEaten):
+                if (self.ingEaten[i][3] == num):
+                    self.order[count].append(self.ingEaten[i]) # Adds it if they have the same frequency
+                else:
+                    num = self.ingEaten[i][3]
+                    count+=1
+                    self.order.append([self.ingEaten[i]]) # Else creates a new frequency list
+                i+=1
+            self.editStats(str(self.order))
+        else: self.order = []
         return self.order
+    def getGoodIng(self):
+        if self.authenticated:
+            self.filter()
+            if len(self.order) > 0:
+                self.bestIng = [ans for ans, _, _, _ in self.order[-1]]
+            else: self.bestIng = ["NO RESULTS YET"]
+            print(self.bestIng)
+            return self.bestIng
+        else: return []
+    def getBadIng(self):
+        if self.authenticated:
+            self.filter()
+            if len(self.order) > 0:
+                self.worstIng = [ans for ans, _, _, _ in self.order[0]]
+            else: self.worstIng = ["NO RESULTS YET"]
+            print(self.worstIng)
+            return self.worstIng
+        else: return []
+    def getBadFood(self, limit = 10, random = True):
+        if self.authenticated:
+            self.badFood = []
+            self.getBadIng()
+            if (self.worstIng[0] == "NO RESULTS YET"):
+                self.badFood = ["NO RESULTS YET"]
+                return self.badFood
+            for num, stuff in enumerate(data[1]):
+                stuff = eval(stuff)
+                if type(stuff) != float:
+                    for x in stuff:
+                        for i in self.worstIng:
+                            if (x == i): 
+                                self.badFood.append(data[0][num])
+                                break
+                if (len(self.badFood) > limit):
+                    break
+            # print("HELLO")
+            print(self.badFood)
+            return self.badFood
+        else: return []
+    def getGoodFood(self, limit = 10, random = True):
+        if self.authenticated:
+            self.goodFood = []
+            self.getGoodIng()
+            if (self.bestIng[0] == "NO RESULTS YET"):
+                self.goodFood = ["NO RESULTS YET"]
+                return self.goodFood
+            for num, stuff in enumerate(data[1]):
+                stuff = eval(stuff)
+                hold = True
+                if type(stuff) != float:
+                    for x in stuff:
+                        hold = x in self.bestIng
+                        if (not hold): break
+                if (hold): 
+                    self.goodFood.append(data[0][num])
+                if (len(self.goodFood) > limit):
+                    break
+            # print("HELLO")
+            print(self.goodFood)
+            return self.goodFood
+        else: return []
     def printFa(self):
         '''
         This is a nice way to print out the foods based on frequency.
@@ -172,11 +235,17 @@ class Crohns(makeAccount.CSV):
                 self.editName(name1)
             elif name == "passwordchange":
                 self.changePassword(self.words[self.ind], hashing.hashTag(name1))
+            elif name == "signout":
+                self.authenticated = False
+                self.user = ""
             return "1"
         @app.route('/<string:name>', methods=["GET"])
         def _get_javascript_data(name):
             if name == "process":
                 return ", ".join(data[0])
+            elif name == "analyse":
+                print(";; ".join([",, ".join(self.getGoodIng()), ",, ".join(self.getBadIng()), ",, ".join(self.getGoodFood()), ",, ".join(self.getBadFood())]))
+                return ";; ".join([",, ".join(self.getGoodIng()), ",, ".join(self.getBadIng()), ",, ".join(self.getGoodFood()), ",, ".join(self.getBadFood())])
             if(render_template(name)):
                 # Remember: ** We have a profile image, which was added in the accounts section. **
                 if self.user != "":

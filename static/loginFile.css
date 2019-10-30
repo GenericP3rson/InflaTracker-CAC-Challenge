@@ -186,6 +186,17 @@ body {
     left: 50%;
     margin-left: calc((100vh - (75px + 5em))/-2);
 }
+/* #rec {
+    position: fixed;
+    background: red;
+    z-index: -1;
+    width: 10px;
+    height: 100px;
+    top: calc(75px + 5em + 100vh - (75px + 5em) - 3em);
+}
+.rec {
+    color: black;
+} */
 #loading {
     position: fixed;
     width: 100px;
