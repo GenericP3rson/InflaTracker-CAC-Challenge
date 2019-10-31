@@ -59,6 +59,8 @@ class Crohns(makeAccount.CSV):
             return
         algorithm = KM(n_clusters=2)
         categories = algorithm.fit_predict(self.allCoord)
+        print(self.allCoord)
+        print(categories)
         plt.scatter(self.allCoord[categories == 0, 0], self.allCoord[categories == 0, 1], c= "green")
         plt.scatter(self.allCoord[categories == 1, 0],self.allCoord[categories == 1, 1], c="red")
         plt.scatter(algorithm.cluster_centers_[:, 0], algorithm.cluster_centers_[:, 1], c= "black", marker="*")
@@ -147,7 +149,7 @@ class Crohns(makeAccount.CSV):
     def getGoodIng(self):
         if self.authenticated:
             self.filter()
-            if len(self.order) > 0:
+            if len(self.order) > 1:
                 self.bestIng = [ans for ans, _, _, _ in self.order[-1]]
             else: self.bestIng = ["NO RESULTS YET"]
             print(self.bestIng)
@@ -156,7 +158,7 @@ class Crohns(makeAccount.CSV):
     def getBadIng(self):
         if self.authenticated:
             self.filter()
-            if len(self.order) > 0:
+            if len(self.order) > 1:
                 self.worstIng = [ans for ans, _, _, _ in self.order[0]]
             else: self.worstIng = ["NO RESULTS YET"]
             print(self.worstIng)

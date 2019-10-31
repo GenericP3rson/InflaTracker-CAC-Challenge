@@ -10,11 +10,11 @@ document.getElementById("chooseButtons").addEventListener("change", () =>{
         xhttp.onreadystatechange = (e) => {
             if(xhttp.readyState == 4 && xhttp.status == 200) {
                 let everything = e.target.responseText.split(";; ");
-                let phrases = ["FOODS TO EAT", "FOODS NOT TO EAT", "INGREDIENTS TO EAT", "INGREDIENTS NOT TO EAT"];
+                let phrases = ["INGREDIENTS TO EAT", "INGREDIENTS NOT TO EAT", "FOODS TO EAT", "FOODS NOT TO EAT"];
                 let things = [goodfood, badfood, gooding, bading];
                 for (let i =0; i < things.length; ++i) {
                     things[i].innerHTML = `${phrases[i]}\n${everything[i].split(",, ").join("\n")}`;
-                    alert(phrases[i] + ": " + everything[i]);
+                    alert(phrases[i] + ": " + everything[i].split(",, ").join(", "));
                 }
                 document.getElementById("back").checked = true;
             }

@@ -39,6 +39,10 @@
                 <div id="namechange" class="aag">Edit Name</div>
                 <div id="passwordchange" class="aag">Edit Password</div>
                 <div id="signout" class="aa">Sign Out</div>
+                <div id = "goodfood" class = "bb"></div>
+                <div id = "badfood" class = "bb"></div>
+                <div id = "gooding" class = "bb"></div>
+                <div id = "bading" class = "bb"></div>
             </div>
             <!--Okay, here we fill in some info about our user.
             Some things we should contain:
@@ -67,6 +71,24 @@
                         xhttp.send()
                     })
                 }
+                let recs = document.getElementsByClassName("bb");
+                let xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = (e) => {
+                    if(xhttp.readyState == 4 && xhttp.status == 200) {
+                        let everything = e.target.responseText.split(";; ");
+                        let phrases = ["INGREDIENTS TO EAT", "INGREDIENTS NOT TO EAT", "FOODS TO EAT", "FOODS NOT TO EAT"];
+                        let colour = ["rgb(0, 255, 0)", "rgb(255, 51, 0)", "rgb(0, 255, 0)", "rgb(255, 51, 0)"];
+                        let things = [goodfood, badfood, gooding, bading];
+                        for (let i =0; i < things.length; ++i) {
+                            recs[i].innerHTML = `${phrases[i]}<br>>${everything[i].split(",, ").join("<br>>")}`;
+                            // alert(phrases[i] + ": " + everything[i]);
+                            recs[i].style.color = colour[i];
+                        }
+                        // document.getElementById("back").checked = true;
+                    }
+                }
+                xhttp.open("GET", "analyse");
+                xhttp.send();
             </script>
         {% else %}
             <!--Ok, we don't have an account set up yet.-->
